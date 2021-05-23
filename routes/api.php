@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\BootstrapController;
+use App\Http\Controllers\UpdateProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +36,11 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('forgot-password', ForgotPasswordController::class);
 
     Route::post('reset-password', ResetPasswordController::class);
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('bootstrap', BootstrapController::class);
+
+    Route::post('profile', UpdateProfileController::class);
 });
