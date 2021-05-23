@@ -57,12 +57,37 @@ class DriverRegistrationRequest extends FormRequest
                 'string',
                 'max:50'
             ],
-            'model' => ['required', 'string', 'max:50'],
-            'date_of_birth' => ['required', 'date_format:m-d-Y', 'max:10'],
-            'address' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'integer'],
-            'paypal' => ['max:150'],
-            'venmo' => ['max:150'],
+            'model' => [
+                'required',
+                'string',
+                'max:50'
+            ],
+            'date_of_birth' => [
+                'required',
+                'date_format:m-d-Y',
+                'max:10'
+            ],
+            'address' => [
+                'required',
+                'string',
+                'max:100'
+            ],
+            'latitude' => [
+                'required',
+            ],
+            'longitude' => [
+                'required'
+            ],
+            'phone_number' => [
+                'required',
+                'integer'
+            ],
+            'paypal' => [
+                'max:150'
+            ],
+            'venmo' => [
+                'max:150'
+            ],
         ];
     }
 }
