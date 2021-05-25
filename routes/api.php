@@ -5,8 +5,9 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\BootstrapController;
-use App\Http\Controllers\UpdateProfileController;
+use App\Http\Controllers\Customer\BootstrapController;
+use App\Http\Controllers\Customer\JobsController;
+use App\Http\Controllers\Customer\UpdateProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('bootstrap', BootstrapController::class);
 
     Route::post('profile', UpdateProfileController::class);
+
+    Route::apiResource('jobs', JobsController::class);
 });
