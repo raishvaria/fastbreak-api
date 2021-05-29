@@ -12,6 +12,17 @@ class Job extends Model
 
     protected $guarded = ['id'];
 
+    protected $appends = ['image'];
+
+    public function getImageAttribute()
+    {
+        if ($this->picture) {
+            return env('WEB_URL') . '/' . $this->picture;
+        }
+
+        return null;
+    }
+
     public function user()
     {
         return  $this->belongsTo(User::class, 'user_id');
