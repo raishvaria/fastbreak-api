@@ -81,6 +81,10 @@ class JobRequest extends FormRequest
                 'nullable',
                 'string'
             ],
+            'picture' => [
+                'nullable',
+                'string'
+            ],
             'delivery_notes' => [
                 'nullable',
                 'string'
