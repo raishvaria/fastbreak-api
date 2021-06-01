@@ -9,6 +9,7 @@ use App\Http\Controllers\Customer\BootstrapController;
 use App\Http\Controllers\Customer\JobsController;
 use App\Http\Controllers\Customer\PaymentController;
 use App\Http\Controllers\Customer\UpdateProfileController;
+use App\Http\Controllers\Customer\UploadImageController;
 use App\Http\Controllers\Webhook\StripeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('bootstrap', BootstrapController::class);
 
     Route::post('profile', UpdateProfileController::class);
+
+    Route::post('upload/image', UploadImageController::class);
 
     Route::post('jobs/{job}/pay', PaymentController::class);
 
