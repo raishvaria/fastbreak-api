@@ -19,7 +19,7 @@ class DriverRegistrationController extends Controller
      */
     public function __invoke(DriverRegistrationRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->getUserPayload());
 
         $role = config('roles.models.role')::where('name', '=', 'Driver')->first();
         $user->attachRole($role);

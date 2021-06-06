@@ -42,6 +42,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'first_name',
+        'last_name'
+    ];
+
+    public function getFirstNameAttribute()
+    {
+        $name = explode(' ', $this->name);
+
+        return $name[0];
+    }
+
+    public function getLastNameAttribute()
+    {
+        $name = explode(' ', $this->name);
+
+        if (array_key_exists('1', $name)) {
+            return $name[1];
+        }
+
+        return null;
+    }
+
     public function setPasswordAttribute($value)
     {
         if ($value) {

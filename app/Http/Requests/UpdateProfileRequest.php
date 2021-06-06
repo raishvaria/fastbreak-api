@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateProfileController extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,19 @@ class UpdateProfileController extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'first_name' => [
                 'required',
                 'string',
                 'max:255'
+            ],
+            'last_name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'zip' => [
+                'required',
+                'string',
             ],
             'email' => [
                 'required',
@@ -44,5 +53,19 @@ class UpdateProfileController extends FormRequest
                 'confirmed'
             ],
         ];
+    }
+
+    public function getUserPayload()
+    {
+        return collect($this->validated())
+            ->only([
+                'email',
+                'password',
+                'zip',
+            ])
+            ->merge([
+                'name' => $this->first_name . ' ' . $this->last_name
+            ])
+            ->toArray();
     }
 }

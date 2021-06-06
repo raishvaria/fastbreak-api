@@ -19,7 +19,7 @@ class UserRegistrationController extends Controller
      */
     public function __invoke(UserRegistrationRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->getUserPayload());
 
         $role = config('roles.models.role')::where('name', '=', 'User')->first();
         $user->attachRole($role);
