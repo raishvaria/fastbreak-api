@@ -18,8 +18,14 @@ class JobsController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $status = $request->status;
 
-        $jobs = Job::where('user_id', $user->id)->latest()->paginate(10);
+        $jobs = Job::where('user_id', $user->id)
+            ->when($status, function ($query, $status) {
+                return $query->whereStatus($status);
+            })
+            ->latest()
+            ->paginate(10);
 
         return response()->json([
             'jobs' => $jobs

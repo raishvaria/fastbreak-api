@@ -130,4 +130,9 @@ class Job extends Model
     {
         return str_random(32) . '.' . $file->extension();
     }
+
+    public function scopeWhereStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
 }
