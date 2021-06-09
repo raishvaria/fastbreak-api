@@ -33,6 +33,10 @@ class JobRequest extends FormRequest
                 'nullable',
                 'string'
             ],
+            'type' => [
+                'required',
+                'string'
+            ],
             'time' => [
                 'required',
                 'string',

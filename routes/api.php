@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Customer\BootstrapController;
 use App\Http\Controllers\Customer\JobsController;
 use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\Customer\ResendEmailVerificationController;
 use App\Http\Controllers\Customer\UpdateProfileController;
 use App\Http\Controllers\Customer\UploadImageController;
 use App\Http\Controllers\Webhook\StripeController;
@@ -59,4 +60,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('jobs/{job}/pay', PaymentController::class);
 
     Route::apiResource('jobs', JobsController::class);
+
+    Route::post('/email/verification-notification', ResendEmailVerificationController::class);
 });
