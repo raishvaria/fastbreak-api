@@ -24,10 +24,19 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'first_name' => [
                 'required',
                 'string',
                 'max:255'
+            ],
+            'last_name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'zip' => [
+                'required',
+                'string',
             ],
             'email' => [
                 'required',
@@ -43,5 +52,19 @@ class UserRegistrationRequest extends FormRequest
                 'confirmed'
             ],
         ];
+    }
+
+    public function getUserPayload()
+    {
+        return collect($this->validated())
+            ->only([
+                'email',
+                'password',
+                'zip',
+            ])
+            ->merge([
+                'name' => $this->first_name . ' ' . $this->last_name
+            ])
+            ->toArray();
     }
 }

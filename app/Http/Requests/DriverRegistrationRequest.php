@@ -24,7 +24,12 @@ class DriverRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'first_name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'last_name' => [
                 'required',
                 'string',
                 'max:255'
@@ -46,6 +51,10 @@ class DriverRegistrationRequest extends FormRequest
                 'required',
                 'string',
                 'max:50'
+            ],
+            'zip' => [
+                'required',
+                'string',
             ],
             'year' => [
                 'required',
@@ -89,5 +98,30 @@ class DriverRegistrationRequest extends FormRequest
                 'max:150'
             ],
         ];
+    }
+
+    public function getUserPayload()
+    {
+        return collect($this->validated())
+            ->only([
+                'email',
+                'password',
+                'drivers_license',
+                'year',
+                'make',
+                'model',
+                'date_of_birth',
+                'address',
+                'latitude',
+                'longitude',
+                'phone_number',
+                'paypal',
+                'venmo',
+                'zip'
+            ])
+            ->merge([
+                'name' => $this->first_name . ' ' . $this->last_name
+            ])
+            ->toArray();
     }
 }

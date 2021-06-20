@@ -5,8 +5,13 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\BootstrapController;
-use App\Http\Controllers\UpdateProfileController;
+use App\Http\Controllers\Customer\BootstrapController;
+use App\Http\Controllers\Customer\JobsController;
+use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\Customer\ResendEmailVerificationController;
+use App\Http\Controllers\Customer\UpdateProfileController;
+use App\Http\Controllers\Customer\UploadImageController;
+use App\Http\Controllers\Webhook\StripeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +25,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+// Stripe webhook
+//----------------------------------
+
+Route::post('/stripe/webhook', StripeController::class);
 
 
 // Authentication & Password Reset
@@ -43,4 +54,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('bootstrap', BootstrapController::class);
 
     Route::post('profile', UpdateProfileController::class);
+
+    Route::post('upload/image', UploadImageController::class);
+
+    Route::post('jobs/{job}/pay', PaymentController::class);
+
+    Route::apiResource('jobs', JobsController::class);
+
+    Route::post('/email/verification-notification', ResendEmailVerificationController::class);
 });
