@@ -20,7 +20,8 @@ class JobsController extends Controller
         $user = Auth::user();
         $status = $request->status;
 
-        $jobs = Job::where('user_id', $user->id)
+        $jobs = Job::with(['deliveryType', 'user', 'driver'])
+            ->where('user_id', $user->id)
             ->when($status, function ($query, $status) {
                 return $query->whereStatus($status);
             })
@@ -55,6 +56,7 @@ class JobsController extends Controller
      */
     public function show(Job $job)
     {
+        $job->load(['deliveryType', 'user', 'driver']);
         return response()->json([
             'job' => $job
         ]);

@@ -28,6 +28,11 @@ class Job extends Model
         return  $this->belongsTo(User::class, 'user_id');
     }
 
+    public function deliveryType()
+    {
+        return  $this->belongsTo(DeliveryType::class, 'delivery_type_id');
+    }
+
     public static function createFromRequest(JobRequest $request)
     {
         $filename = null;

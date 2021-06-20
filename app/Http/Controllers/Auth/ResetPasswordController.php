@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ResetPasswordController extends Controller
 {
@@ -20,21 +22,24 @@ class ResetPasswordController extends Controller
      */
     public function __invoke(ResetPasswordRequest $request)
     {
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) use ($request) {
-                $user->forceFill([
-                    'password' => $password
-                ])->setRememberToken(Str::random(60));
+        $request->only('email', 'password', 'password_confirmation', 'otp');
 
-                $user->save();
+        $passwordResets = DB::table('password_resets')
+            ->where('otp', $request->otp)
+            ->where('email', $request->email)
+            ->first();
+        
+        if(! $passwordResets) {
+            return response()->json(['success' => false, 'message' => 'invalid email or otp passed.']);
+        }
+        
+        $passwordResets->delete();
+        $user = User::where('email', $request->email)->first();
+        $user->password = $request->password;
+        $user->save();
 
-                event(new PasswordReset($user));
-            }
-        );
+        $user->save();
 
-        return $status == Password::PASSWORD_RESET
-            ? $this->responseJson(['status', __($status)])
-            : $this->responseJson(['email' => [__($status)]]);
+        return response()->json(['success' => true, 'message' => 'Password reset successfully.']);
     }
 }

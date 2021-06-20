@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class JobRequest extends FormRequest
 {
@@ -33,9 +34,9 @@ class JobRequest extends FormRequest
                 'nullable',
                 'string'
             ],
-            'type' => [
+            'delivery_type_id' => [
                 'required',
-                'string'
+                Rule::exists('delivery_types', 'id')
             ],
             'time' => [
                 'required',
